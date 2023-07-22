@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+  <section>
+    <div class="product">
+      <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+      <div class="description">
+        <h3>Stubborn Attachments</h3>
+        <h5>$20.00</h5>
+      </div>
+    </div>
+    <form>
+      <script src="https://js.stripe.com/v2/checkout.js" class="stripe-button" data-key="pk_test_51NVoSgSFnLmMeVsDKUmlUz00QxrywiOIPqH2jW0LnopOLrIdO1DmD5iaa9oeUvyZAnfcx0LhwJcJGYBGKLHFAXqm00GK7tPU8s
+          " data-amount="10" data-currency="usd" data-name="CloudKitchen" data-desciption="Buy food plan"
+        data-locale="auto">
+
+        </script>
+      <button type="submit" id="checkout-button">Checkout</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+      document.getElementById("checkout-button").addEventListener("click",async  () => {
+        let resp = await axios.post('/stripe/checkout/64b8dcb04bfdc31f6883a535', {
+        });
+      })
+    </script>
+  </section>
+</body>
+
+</html>

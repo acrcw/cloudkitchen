@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+  <!-- Material-UI CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mui-login/dist/mui-login.min.css">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .login-container {
+      border-radius: 1rem;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-container .form-group {
+      margin-bottom: 20px;
+    }
+
+    .login-container button[type="submit"] {
+      transition: background-color 0.3s ease;
+    }
+
+    .login-container button[type="submit"]:hover {
+      background-color: #6c757d;
+    }
+  </style>
+  <title>Reset Password</title>
+</head>
+
+<body>
+  <div class="login-container">
+    <h2>Reset Password</h2>
+    <form>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Enter a new Password">
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password">
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      <div class="text-center mt-3">
+        <a href="http://localhost:3000/user/login">Back to Login</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+  <!-- Material-UI JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mui-login/dist/mui-login.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  
+  <script>
+    let token="";
+    window.onload = function () {
+      token = window.location.pathname.split("/");
+      token=token[token.length-1]
+    }
+
+    let submit = document.querySelector("button[type='submit']");
+    submit.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let confirmPassword = document.getElementById("confirmPassword").value;
+      
+      let resp = await axios.post(`/user/resetpassword/${token}`, {
+
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        token:token
+      });
+      console.log(resp);
+      if (resp.status() == 400) {
+        alert("Link has been expired")      }
+      else if (resp.status() == 202)
+      {
+        alert("Password has been changed")
+      }
+      else if(resp.status() == 500)
+      {
+        alert("user not found")
+      }
+      //   document.getElementById('email').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('confirmPassword').value = '';
+
+      // Add your logic for password reset here
+    });
+  </script>
+</body>
+
+</html>
