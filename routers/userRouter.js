@@ -8,8 +8,8 @@ const {Logout,sendupdatepage,checkLogin,isAuthorized, getforgetpwd, resetpwd,for
 const protectroute = require('./authhelper')
 // userRouter.route('/').get(protectroute,getusers).post(postuser).patch(updateuser).delete(deleteuser)
 //multer for file upload
-let loc=imgfolder.replaceAll("\\","/")
-// console.log(loc)
+let loc=imgfolder
+console.log(loc)
 const multerStorage=multer.diskStorage({
     destination:function(req,file,cb)
     {

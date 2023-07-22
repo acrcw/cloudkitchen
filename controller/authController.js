@@ -108,14 +108,15 @@ module.exports.postSignup = async function postSignup(req, res) {
 
     // console.log(req.file.path)
     let data = req.body;
+   
     let rv = await usermodel.create({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         confirmpassword: req.body.confirmpwd,
-        profileimg: fs.readFileSync(`${req.file.path}`)
+       
     })
-    fs.unlink
+    // fs.unlink(req.file.path)
     sendMail("signup", rv)
     res.redirect("/user/login")
 }
@@ -131,20 +132,18 @@ module.exports.postLogin = async function postLogin(req, res) {
                 let token = jwt.sign({ payload: uid }, JWT_KEY, { expiresIn: 60 * 60 });
                 res.cookie("Loggedin", token, { httpOnly: true, maxAge: 1000 * 60, secure: true });
                 res.json({
-                    message: "success"
+                    user
                 });
             } else {
                 console.log("error in password");
-                res.status(401).json({
-                    message: "Login failed"
-                });
+                res.status(401);
             }
 
         });
     }
     else {
-        console.log("hello")
-        res.json({ message: "user doesnt exist" });
+        // console.log("hello")
+        res.status(404);
     }
     console.log(user)
 }

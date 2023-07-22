@@ -3,10 +3,11 @@ const express = require("express")
 const app = express();
 const cookieParser = require("cookie-parser")
 const stripe = require('stripe')('sk_test_51NVoSgSFnLmMeVsDYJcCwzpQmv0MX8VgN791e2ypGGyy9BHzGkoEz5VrjKjfP22SWTMSYKxFbLzdu4XsyDx6vIgS00WL8heiGv');
+const cors = require('cors')
 app.use(express.json()); // middleware fnc used in post // to convert data into json
 app.use(cookieParser()) // to use as middleware  to acess cokkies in request and response object
-
-app.listen(5000)
+app.use(cors())
+app.listen(5001)
 //mini app  
 const userRouter = require("./routers/userRouter")
 const planRouter = require("./routers/planRouter");
