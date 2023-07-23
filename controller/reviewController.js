@@ -5,7 +5,7 @@ module.exports.getAllReviews = async function getAllReviews(req, res) {
         const reviews = await reviewmodel.find();
         if (reviews) {
             return res.json({
-                message: "all reviews recivied",
+                message: "all reviews received",
                 totalreviews: reviews.length,
                 data: reviews
             })
@@ -39,14 +39,14 @@ module.exports.getPlanReviews = async function getPlanReviews(req, res) {
         let filtered=review.filter((obj)=>(obj.plan.id==planid))
         if (review) {
             return res.json({
-                message: "review recived",
+                message: "reviews received",
                 totalreviews: filtered.length,
-                data: filtered
+                reviews: filtered
             })
         }
         else {
             return res.json({
-                message: "review not found"
+                message: "reviews_not_found"
             })
         }
     }

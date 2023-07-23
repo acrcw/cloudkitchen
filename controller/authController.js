@@ -184,5 +184,5 @@ module.exports.checkLogin = function protectroute(req, res, next) {
 };
 module.exports.Logout = function Logout(req, res) {
   res.cookie("Loggedin", "", { httpOnly: true, maxAge: 1, secure: true });
-  res.redirect("/user/login");
+  res.json({message:"Loggedout"})
 };

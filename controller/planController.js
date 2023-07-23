@@ -9,7 +9,7 @@ module.exports.getAllPlans = async function getAllPlans(req, res) {
     let plans = await planmodel.find();
     if (plans) {
       return res.json({
-        message: "all plans recived",
+        message: "all plans received",
         totalplans: plans.length,
         plans: plans,
       });
