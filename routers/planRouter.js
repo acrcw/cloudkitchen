@@ -6,7 +6,7 @@ const protectroute = require("./authhelper");
 //basic all plans
 planRouter.route("/allplans").get(getAllPlans)
 // ur plan u have currently have
-planRouter.route("/plan/:id").get(protectroute,getPlan)
+planRouter.route("/plan/:id").get(getPlan)
 
 planRouter.route("/createplan").post(checkLogin,isAuthorized(['admin','owner']),createPlan)
 planRouter.route("/modifyplan/:id").patch(updatePlan).delete(deletePlan)

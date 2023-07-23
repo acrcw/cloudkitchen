@@ -32,7 +32,7 @@ const planSchema = mongoose.Schema({
     ratingAverage: {
         type: Number,
         min: 0,
-        max: 100,
+        max: 5,
         default: 0
     },
     discount: {

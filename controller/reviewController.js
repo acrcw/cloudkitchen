@@ -60,18 +60,15 @@ module.exports.getPlanReviews = async function getPlanReviews(req, res) {
 module.exports.createReview = async function createReview(req, res) {
     try {
         let planId = req.params.plan
-        let reviewData = req.body;
-        reviewData.user = req.id;
-        reviewData.plan = planId;
         let plan = await planmodel.findById(planId);
-        console.log(plan)
+        // console.log(plan)
         if (plan == null) {
-            return res.status(500).json({
+            return res.status(200).json({
                 message: "Plan not found"
             })
         }
-        let createdReview = await reviewmodel.create(reviewData);
-        plan.ratingAverage = (plan.ratingAverage + reviewData.rating) / (plan.totalReviews + 1);
+        let createdReview = await reviewmodel.create(req.body);
+        plan.ratingAverage = (plan.ratingAverage + req.body.rating) / (plan.totalReviews + 1);
         plan.totalReviews += 1;
         let updatedPlan = await plan.save();
         return res.json({
@@ -81,7 +78,7 @@ module.exports.createReview = async function createReview(req, res) {
         })
     }
     catch (err) {
-        return res.status(500).json({
+        return res.status(200).json({
             message: err.message
         })
     }

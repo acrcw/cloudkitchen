@@ -5,13 +5,13 @@ const stripe = require("stripe")(
 //done
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
-    console.log("hello");
+    // console.log("hello");
     let plans = await planmodel.find();
     if (plans) {
       return res.json({
         message: "all plans recived",
         totalplans: plans.length,
-        data: plans,
+        plans: plans,
       });
     } else {
       return res.json({
@@ -28,6 +28,7 @@ module.exports.getAllPlans = async function getAllPlans(req, res) {
 module.exports.getPlan = async function getPlan(req, res) {
   try {
     let id = req.params.id;
+    // console.log(id)
     let plan = await planmodel.findById(id);
     if (plan) {
       return res.json({
@@ -36,7 +37,7 @@ module.exports.getPlan = async function getPlan(req, res) {
       });
     } else {
       return res.json({
-        message: "plan not found",
+        message: "not_found",
       });
     }
   } catch (error) {
