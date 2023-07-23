@@ -25,10 +25,10 @@ module.exports.getAllReviews = async function getAllReviews(req, res) {
 module.exports.topthreereviews = async function topthreereviews(req, res) {
     try {
         const top3review = await reviewmodel.find().sort({ rating: -1 }).limit(3)
-        return res.json({ message: "top 3", data: top3review })
+        return res.json({ message: "top_3_reviews", reviews: top3review })
     }
     catch (err) {
-        return res.status(500).json({ message: "review not found" })
+        return res.status(200).json({ message: "reviews_not_found" })
     }
 }
 //done

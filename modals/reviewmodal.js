@@ -12,7 +12,7 @@ const reviewSchema = mongoose.Schema({
     rating: {
         type: Number,
         min: 1,
-        max: 10,
+        max: 5,
         required: [true, "rating is a required field"]
     },
     createdAt: {
@@ -22,12 +22,14 @@ const reviewSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.ObjectId,
         ref: "usermodel",
-        required: [true, "need a user to review"]
+        required: [true, "need a user to review"],
+        autopopulate: true
     },
     plan: {
         type: mongoose.Schema.ObjectId,
         ref: "planmodel",
-        required: [true, "need a plan to be reviewed"]
+        required: [true, "need a plan to be reviewed"],
+        autopopulate: true
     }
 })
 //find pre hook
@@ -40,5 +42,6 @@ reviewSchema.pre(/^find/, function (next) {
     });
     next();
 })
+reviewSchema.plugin(require('mongoose-autopopulate'));
 const reviewmodel = mongoose.model("reviewmodel", reviewSchema)
 module.exports = reviewmodel

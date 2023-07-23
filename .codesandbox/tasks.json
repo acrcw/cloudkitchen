@@ -14,7 +14,7 @@
       "command": "node ./mainapp.js",
       "runAtStart": true,
       "preview": {
-        "port": 5000
+        "port": 3000
       }
     }
   }

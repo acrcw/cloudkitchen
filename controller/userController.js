@@ -73,11 +73,11 @@ module.exports.updateuser = async function updateuser(req, res) {
             }
 
             const updateddoc = await user.save();
-            // res.json({
-            //     message: "data updated",
-            //     updateddata: updateddoc
-            // })
-            res.redirect("/user/login")
+            res.json({
+                
+                user: updateddoc
+            })
+            // res.redirect("/user/login")
         }
         else {
             res.json({

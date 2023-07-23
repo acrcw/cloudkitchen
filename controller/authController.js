@@ -93,19 +93,19 @@ module.exports.postSignup = async function postSignup(req, res) {
   // console.log(req.file.path)
   let data = req.body;
   try {
-    let rv = await usermodel.create({
+    let user = await usermodel.create({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
       confirmpassword: req.body.confirmpwd,
     });
     // fs.unlink(req.file.path)
-    if (rv) {
-      sendMail("signup", rv);
-      res.status(200).json({ rv });
+    if (user) {
+      sendMail("signup", user);
+      res.status(200).json({ user:user });
     }
   } catch (err) {
-    res.status(200).json({});
+    res.status(200).json({message:"Signup Failed"});
   }
 };
 module.exports.postLogin = async function postLogin(req, res) {
@@ -119,7 +119,7 @@ module.exports.postLogin = async function postLogin(req, res) {
           // console.log("compare passed");
           let uid = user["_id"]; //uid for jwt
           let token = jwt.sign({ payload: uid }, JWT_KEY, {
-            expiresIn: 60 * 60,
+            expiresIn: 60 * 60 * 2,
           });
           res.cookie("Loggedin", token, {
             httpOnly: true,
@@ -127,16 +127,17 @@ module.exports.postLogin = async function postLogin(req, res) {
             secure: true,
           });
           res.status(200).json({
-            user,
+            message:"Success",
+            user:user
           });
         } else {
           // console.log("error in password");
-          res.status(200).json();
+          res.status(200).json({message:"Invalid Login/Password"});
         }
       });
     } else {
       // console.log("hello")
-      res.status(200).json();
+      res.status(200).json({message:"Invalid Login/Password"});
     }
   } catch (err) {
     res.status(200).json({});
@@ -156,13 +157,14 @@ module.exports.isAuthorized = function isAuthorized(roles) {
     if (roles.includes(req.role)) {
       next();
     } else {
-      res.status(401).json({ message: "Unauthorized Route" });
+      res.status(200).json({ message: "Unauthorized Route" });
     }
   };
 };
 //protect route
 module.exports.checkLogin = function protectroute(req, res, next) {
   if (req.cookies.Loggedin) {
+    console.log(req.cookies.Loggedin)
     // var decoded = jwt.verify(req.cookies.Loggedin, JWT_KEY);
     jwt.verify(req.cookies.Loggedin, JWT_KEY, async function (err, decoded) {
       if (err) {
@@ -177,7 +179,7 @@ module.exports.checkLogin = function protectroute(req, res, next) {
       }
     });
   } else {
-    return res.status(302).redirect("/user/login");
+    return res.status(200).json({message:"login"});
   }
 };
 module.exports.Logout = function Logout(req, res) {

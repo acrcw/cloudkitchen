@@ -10,7 +10,7 @@ planRouter.route("/plan/:id").get(protectroute,getPlan)
 
 planRouter.route("/createplan").post(checkLogin,isAuthorized(['admin','owner']),createPlan)
 planRouter.route("/modifyplan/:id").patch(updatePlan).delete(deletePlan)
-// planRouter.route("/topplans").get(topthreeplans)
+planRouter.route("/topplans").get(topthreeplans)
 
 module.exports = planRouter;
 

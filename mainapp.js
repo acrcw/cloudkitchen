@@ -6,7 +6,11 @@ const stripe = require('stripe')('sk_test_51NVoSgSFnLmMeVsDYJcCwzpQmv0MX8VgN791e
 const cors = require('cors')
 app.use(express.json()); // middleware fnc used in post // to convert data into json
 app.use(cookieParser()) // to use as middleware  to acess cokkies in request and response object
-app.use(cors())
+app.use(cors({
+    credentials: true,
+    origin:['http://localhost:3000']
+    
+}))
 app.listen(3000)
 //mini app  
 const userRouter = require("./routers/userRouter")
