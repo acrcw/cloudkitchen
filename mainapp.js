@@ -7,7 +7,7 @@ const cors = require('cors')
 app.use(express.json()); // middleware fnc used in post // to convert data into json
 app.use(cookieParser()) // to use as middleware  to acess cokkies in request and response object
 app.use(cors())
-app.listen(5001)
+app.listen(3000)
 //mini app  
 const userRouter = require("./routers/userRouter")
 const planRouter = require("./routers/planRouter");
