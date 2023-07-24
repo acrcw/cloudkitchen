@@ -82,9 +82,10 @@ module.exports.createPlan = async function createPlan(req, res) {
 module.exports.deletePlan = async function deletePlan(req, res) {
   try {
     let id = req.params.id;
+    console.log(id)
     let deletedPlan = await planmodel.findByIdAndDelete(id);
     return res.json({
-      message: "plan deleted Sucessfully",
+      message: "Plan deleted",
       data: deletedPlan,
     });
   } catch (err) {
@@ -98,12 +99,14 @@ module.exports.updatePlan = async function updatePlan(req, res) {
   try {
     let id = req.params.id;
     let plan = await planmodel.findById(id);
+    // console.log(plan)
     let datatobeupdated = req.body;
     if (plan) {
       const keys = [];
       for (let key in datatobeupdated) {
         keys.push(key);
       }
+      // console.log(keys)
       for (let i = 0; i < keys.length; i++) {
         plan[keys[i]] = datatobeupdated[keys[i]];
       }
