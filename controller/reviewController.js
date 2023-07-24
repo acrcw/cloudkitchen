@@ -56,6 +56,30 @@ module.exports.getPlanReviews = async function getPlanReviews(req, res) {
         })
     }
 }
+module.exports.getUserReviews = async function getUserReviews(req, res) {
+    try {
+        let userid = req.params.userid
+        let review = await reviewmodel.find()
+        let filtered=review.filter((obj)=>(obj.user.id==userid))
+        if (review) {
+            return res.json({
+                message: "reviews received",
+                totalreviews: filtered.length,
+                reviews: filtered
+            })
+        }
+        else {
+            return res.json({
+                message: "reviews_not_found"
+            })
+        }
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message
+        })
+    }
+}
 //done
 module.exports.createReview = async function createReview(req, res) {
     try {
