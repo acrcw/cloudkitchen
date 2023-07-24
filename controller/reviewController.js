@@ -22,6 +22,29 @@ module.exports.getAllReviews = async function getAllReviews(req, res) {
         })
     }
 }
+module.exports.getReviewbyid = async function getReviewbyid(req, res) {
+    try {
+        let id = req.params.id
+        // console.log(id);
+        let review = await reviewmodel.findById(id)
+        if (review) {
+            return res.json({
+                message: "reviews found",
+                review: review
+            })
+        }
+        else {
+            return res.json({
+                message: "review not found"
+            })
+        }
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message
+        })
+    }
+}
 module.exports.topthreereviews = async function topthreereviews(req, res) {
     try {
         const top3review = await reviewmodel.find().sort({ rating: -1 }).limit(3)
@@ -58,7 +81,8 @@ module.exports.getPlanReviews = async function getPlanReviews(req, res) {
 }
 module.exports.getUserReviews = async function getUserReviews(req, res) {
     try {
-        let userid = req.params.userid
+        let userid = req.params.id
+        // console.log(userid)
         let review = await reviewmodel.find()
         let filtered=review.filter((obj)=>(obj.user.id==userid))
         if (review) {
@@ -110,7 +134,8 @@ module.exports.createReview = async function createReview(req, res) {
 //done
 module.exports.updateReview = async function updateReview(req, res) {
     try {
-        let reviewid = req.params.reviewid
+        let reviewid = req.params.reviewid;
+        console.log(reviewid);
         let datatobeupdated = req.body;
         let review = await reviewmodel.findById(reviewid);
         if (review) {
